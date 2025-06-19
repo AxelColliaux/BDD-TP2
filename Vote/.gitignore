@@ -1,0 +1,27 @@
+﻿# Build
+bin/
+obj/
+
+# User-specific
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE config
+.idea/
+*.user
+*.DotSettings.user
+
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragejson
+
+# SpecFlow generated files
+Generated/
+
+# Others
+*.log
