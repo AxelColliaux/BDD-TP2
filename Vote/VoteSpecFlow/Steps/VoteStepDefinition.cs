@@ -33,6 +33,11 @@ public class VoteSteps
     {
         foreach (var row in table.Rows)
         {
+            if (row["Candidat"].ToLower().Contains("blanc"))
+            {
+                _scrutin.NombreVotesBlancs += int.Parse(row["Votes"]);
+                continue;
+            }
             var candidat = _scrutin.Candidats.First(c => c.Nom == row["Candidat"]);
             candidat.NombreVote = int.Parse(row["Votes"]);
         }

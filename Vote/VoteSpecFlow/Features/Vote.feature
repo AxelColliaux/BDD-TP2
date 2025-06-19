@@ -70,3 +70,39 @@
             | Noureddine | 50    |
         When le scrutin est clôturé
         Then le statut du résultat est "Egalite"
+        
+    @EgaliteDeuxiemeTroisieme
+    Scenario: Égalité entre le deuxième et le troisième au premier tour
+        Given un scrutin avec les candidats suivants:
+            | Nom        |
+            | Brian      |
+            | Charles    |
+            | Noureddine |
+            | Nil        |
+        Given les votes suivants ont été enregistrés:
+            | Candidat   | Votes |
+            | Brian      | 40    |
+            | Charles    | 30    |
+            | Noureddine | 30    |
+            | Nil        | 0     |
+        When le scrutin est clôturé
+        Then le résultat affiche:
+            | Candidat   | Votes | Pourcentage |
+            | Brian      | 40    | 40          |
+            | Charles    | 30    | 30          |
+            | Noureddine | 30    | 30          |
+        And le statut du résultat est "PasDeMajorite"
+        
+    @VoteBlanc
+    Scenario: Aucun candidat n’obtient la majorité à cause des votes blancs
+        Given un scrutin avec les candidats suivants:
+            | Nom        |
+            | Brian      |
+            | Noureddine |
+        Given les votes suivants ont été enregistrés:
+            | Candidat   | Votes |
+            | Brian      | 50    |
+            | Noureddine | 45    |
+            | Blanc      | 5     |
+        When le scrutin est clôturé
+        Then le statut du résultat est "PasDeMajorite"

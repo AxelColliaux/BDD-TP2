@@ -5,7 +5,8 @@ public class Scrutin
     public bool IsCloture { get; set; }
     public List<Candidat> Candidats { get; set; } = new List<Candidat>();
     public int NumeroTour { get; set; }
-    public int TotalVotes => Candidats.Sum(c => c.NombreVote);
+    public int TotalVotes => Candidats.Sum(c => c.NombreVote) + NombreVotesBlancs;
+    public int NombreVotesBlancs { get; set; }
 
     public ResultatScrutin CalculerResultat()
     {
@@ -35,9 +36,14 @@ public class Scrutin
         
         if (NumeroTour == 1)
         {
+            Double deuxiemeScore = candidatsTries[1].Pourcentage;
+            List<Candidat> candidatsSecondTour = candidatsTries
+                .Where(c => c.Pourcentage >= deuxiemeScore)
+                .ToList();
+
             return new ResultatScrutin
             {
-                Candidats = candidatsTries.Take(2).ToList(),
+                Candidats = candidatsSecondTour,
                 Status = "PasDeMajorite",
                 NumeroTour = 2,
                 Vainqueur = null
